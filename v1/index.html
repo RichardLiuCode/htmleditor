@@ -2,6 +2,9 @@
 <html>
 
 <head>
+    <meta name="description" content="This is a website that you can type html code and edit them, you can also upload or export html file">
+    <meta name="author" content="richard">
+    <title>HTML editor v1</title>
     <style>
         body {
             margin: 0px;
@@ -221,7 +224,7 @@
         <button onclick="document.getElementById('input').select()" class="contextMenuButton">Select all</button>
         <button onclick="navigator.clipboard.writeText(document.getElementById('input').value)"
             class="contextMenuButton">Copy all code</button>
-        <button onclick="openInNewWin()" class="contextMenuButton">Preview in new window</button>
+        <button onclick="openInNewWin()" class="contextMenuButton" style="margin-bottom: 5px;">Preview in new window</button>
 
 
     </div>

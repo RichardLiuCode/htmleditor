@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        #input {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 50vw;
+            height: 100vh;
+            resize: none;
+            border-radius: 0px;
+            border: none;
+            background-color: lightgray;
+        }
+
+        #input:focus {
+            outline: none
+        }
+
+        #display {
+            position: fixed;
+            width: 50vw;
+            height: 100vh;
+            right: 0;
+            bottom: 0;
+            border: none;
+        }
+
+        #topBar {
+            display: flex;
+            gap: 7px;
+            width: 100vw;
+            height: 30px;
+            background-color: blue;
+            position: fixed;
+            top: 0;
+        }
+
+        #uploadArea {
+            background-color: blue;
+            width: 100vw;
+            height: 200px;
+            position: fixed;
+            top: 0;
+            display: none
+        }
+
+        .topBarButton {
+            height: 20px;
+            margin-top: 5px;
+            background-color: white;
+            border-radius: 0px;
+            border-width: 0px;
+        }
+
+        .topBarButton:active {
+            background-color: rgb(234, 232, 232);
+        }
+
+        #fileInput {
+            position: fixed;
+            margin-top: 100px;
+            margin-left: 20px;
+            height: 30px;
+            width: 350px;
+            background-color: white;
+            border-radius: 0px;
+            border-width: 0px;
+        }
+
+        #fileInputCover {
+            position: fixed;
+            margin-top: 100px;
+            margin-left: 20px;
+            height: 30px;
+            width: 350px;
+            background-color: white;
+            border-radius: 0px;
+            border-width: 0px;
+            pointer-events: none;
+            font-family: arial;
+            font-size: 23px;
+            text-align: center;
+        }
+
+        #confirmUploadFile {
+            position: fixed;
+            margin-top: 100px;
+            margin-left: 380px;
+            height: 30px;
+            width: 130px;
+            font-size: 23px;
+            background-color: white;
+            border-radius: 0px;
+            border-width: 0px;
+        }
+
+        #confirmUploadFile:active {
+            background-color: rgb(234, 232, 232);
+        }
+
+        #cancleUpload {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            font-size: 30px;
+            border-width: 0px;
+            border-radius: 0px;
+            background-color: blue;
+            color: white;
+        }
+
+        #cancleUpload:active {
+            background-color: red;
+        }
+
+        #fileNameDisplay {
+            width: 97vw;
+            height: 30px;
+            position: fixed;
+            margin-top: 150px;
+            margin-left: 20px;
+            background-color: blue;
+            color: white;
+            font-size: 27px;
+            font-family: arial;
+            border-width: 0px;
+            text-align: left;
+        }
+
+        #fileNameDisplay:focus {
+            outline: none
+        }
+
+        .uploadTitle {
+            position: fixed;
+            margin-top: 20px;
+            margin-left: 20px;
+            color: white;
+            width: 500px;
+            height: 60px;
+            font-size: 54px;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        #contextMenu {
+            display: none;
+            position: fixed;
+            background-color: white;
+            width: 200px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: gray;
+        }
+
+        .contextMenuButton {
+            width: 190px;
+            height: 20px;
+            margin-left: 5px;
+            margin-top: 5px;
+            border-radius: 0px;
+            border-width: 0px;
+            background-color: lightgray
+        }
+
+        .contextMenuButton:active {
+            background-color: rgb(198, 198, 198);
+        }
+
+        #projectNameInput {
+            width: 250px;
+            height: 25px;
+            border-width: 1px;
+            border-color: blue;
+            background-color: blue;
+            color: white;
+            font-size: 23px;
+            font-family: arial;
+        }
+
+        #projectNameInput:focus {
+            outline: none
+        }
+    </style>
+</head>
+
+<body>
+
+    <textarea id="input" placeholder="Type here"></textarea>
+    <iframe id="display"></iframe>
+    <div id="topBar">
+        <input id="projectNameInput" readonly style="margin-left:7px">
+        <button class="topBarButton" id="renameProject">Rename</button>
+        <button class="topBarButton" id="openUploadButton">Upload a file</button>
+        <button class="topBarButton" id="openInNewWindow">Preview in new window</button>
+        <button class="topBarButton" id="exportFile">Export as html</button>
+
+
+    </div>
+    <div id="uploadArea">
+        <div class="uploadTitle">
+            Upload File
+        </div>
+        <input id="fileInput" style="height:20px;" id="name" type="file">
+        <div id="fileInputCover">Select a file</div>
+        <button id="confirmUploadFile">Upload</button>
+        <button id="cancleUpload">×</button>
+        <input readonly id="fileNameDisplay">
+    </div>
+    <div id="contextMenu">
+        <button onclick="document.getElementById('input').select()" class="contextMenuButton">Select all</button>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('input').value)"
+            class="contextMenuButton">Copy all code</button>
+        <button onclick="openInNewWin()" class="contextMenuButton">Preview in new window</button>
+
+
+    </div>
+    <textarea id="printText"
+        style="display:none;position:fixed;width:200px;height:100px;resize:none;border-width:0px;"></textarea>
+    <script>
+        document.getElementById("input").addEventListener("input", function () {
+            localStorage.setItem("code", document.getElementById("input").value);
+            document.getElementById("display").srcdoc = document.getElementById("input").value;
+        });
+        document.getElementById("openUploadButton").addEventListener("click", function () {
+            if (document.getElementById("input").value != "") {
+                var ifTheUserSureToUpload = confirm("Upload a file will replace all your work here! Do you want to continue?")
+                if (ifTheUserSureToUpload) {
+                    document.getElementById("uploadArea").style.display = "revert";
+                }
+            } else {
+                document.getElementById("uploadArea").style.display = "revert";
+            }
+        });
+
+        setInterval(function () {
+            document.getElementById("input").style.height = window.innerHeight - 30 + "px";
+            document.getElementById("display").style.height = window.innerHeight - 30 + "px"
+        }, 1000);
+        window.onload = function () {
+            document.getElementById("input").style.height = window.innerHeight - 30 + "px";
+            document.getElementById("display").style.height = window.innerHeight - 30 + "px"
+        }
+        document.getElementById("fileInput").addEventListener("change", function () {
+            document.getElementById("fileNameDisplay").value = (document.getElementById("fileInput").files[0].name)
+        })
+        document.getElementById("confirmUploadFile").addEventListener("click", function () {
+            var file = document.getElementById("fileInput").files[0];
+            if (file) {
+                var reader = new FileReader;
+                reader.onload = function (event) {
+                    document.getElementById("input").value = event.target.result;
+                    document.getElementById("display").srcdoc = event.target.result;
+                    document.getElementById("uploadArea").style.display = "none"
+                    localStorage.setItem("code", document.getElementById("input").value);
+                }
+                reader.readAsText(file);
+            }
+        });
+        document.getElementById("cancleUpload").addEventListener("click", function () {
+            document.getElementById("uploadArea").style.display = "none";
+        })
+        document.getElementById("openInNewWindow").addEventListener("click", function () {
+            openInNewWin()
+        });
+        function openInNewWin() {
+            var openNewWindow = window.open("", "_blank")
+            var newWindowContent = document.getElementById("display").srcdoc
+            openNewWindow.document.write(newWindowContent);
+        }
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+            document.getElementById("contextMenu").style.left = e.pageX + "px";
+            document.getElementById("contextMenu").style.top = e.pageY + "px";
+            document.getElementById("contextMenu").style.display = "revert"
+        })
+        document.addEventListener("click", function () {
+            document.getElementById("contextMenu").style.display = "none"
+        })
+        var isSaved = 1
+        document.getElementById("renameProject").addEventListener("click", function () {
+            if (isSaved) {
+                isSaved = 0;
+                document.getElementById("renameProject").innerText = "Save"
+                document.getElementById("projectNameInput").readOnly = false;
+                document.getElementById("projectNameInput").style = "background-color:white;color:black"
+            } else {
+                localStorage.setItem("name", document.getElementById("projectNameInput").value)
+                isSaved = 1;
+                document.getElementById("renameProject").innerText = "Rename"
+                document.getElementById("projectNameInput").style = "background-color:blue;color:white"
+                document.getElementById("projectNameInput").readOnly = true;
+            }
+
+
+        });
+        window.onload = function () {
+            document.getElementById("projectNameInput").value = localStorage.getItem("name");
+            document.getElementById("input").value = localStorage.getItem("code");
+            document.getElementById("display").srcdoc = localStorage.getItem("code");
+        }
+        document.getElementById("exportFile").addEventListener("click", function () {
+            var blob = new Blob([document.getElementById("input").value], { type: "text/html" });
+            var a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            var fileName = (document.getElementById("projectNameInput").value || "code") + ".html";
+            a.download = fileName;
+            a.click();
+        });
+
+    </script>
+</body>
+
+</html>

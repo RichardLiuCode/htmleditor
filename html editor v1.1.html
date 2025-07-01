@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description"
+        content="This is a website that you can type html code and edit them, you can also upload or export html file">
+    <meta name="author" content="richard">
+
+    <title>HTML editor v1</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        #input {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 50vw;
+            height: 100vh;
+            resize: none;
+            border-radius: 0px;
+            border: none;
+            background-color: lightgray;
+        }
+
+        #input:focus {
+            outline: none
+        }
+
+        #display {
+            position: fixed;
+            width: 50vw;
+            height: 100vh;
+            right: 0;
+            bottom: 0;
+            border: none;
+        }
+
+        #topBar {
+            display: flex;
+            gap: 7px;
+            width: 100vw;
+            height: 30px;
+            background-color: blue;
+            position: fixed;
+            top: 0;
+        }
+
+        #uploadArea {
+            background-color: blue;
+            width: 100vw;
+            height: 200px;
+            position: fixed;
+            top: 0;
+            display: none;
+        }
+
+        .topBarButton {
+            height: 20px;
+            margin-top: 5px;
+            background-color: white;
+            border-radius: 0px;
+            border-width: 0px;
+        }
+
+        .topBarButton:active {
+            background-color: rgb(234, 232, 232);
+        }
+
+        #fileInput {
+            position: fixed;
+            margin-top: 100px;
+            margin-left: 20px;
+            height: 30px;
+            width: 350px;
+            background-color: white;
+            border-radius: 0px;
+            border-width: 0px;
+        }
+
+        #fileInputCover {
+            position: fixed;
+            margin-top: 100px;
+            margin-left: 20px;
+            height: 30px;
+            width: 350px;
+            background-color: white;
+            border-radius: 0px;
+            border-width: 0px;
+            pointer-events: none;
+            font-family: arial;
+            font-size: 23px;
+            text-align: center;
+        }
+
+        #confirmUploadFile {
+            position: fixed;
+            margin-top: 100px;
+            margin-left: 380px;
+            height: 30px;
+            width: 130px;
+            font-size: 23px;
+            background-color: white;
+            border-radius: 0px;
+            border-width: 0px;
+        }
+
+        #confirmUploadFile:active {
+            background-color: rgb(234, 232, 232);
+        }
+
+        #cancleUpload,
+        #cancleInsert {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            font-size: 30px;
+            border-width: 0px;
+            border-radius: 0px;
+            background-color: blue;
+            color: white;
+        }
+
+        #cancleUpload:active,
+        #cancleInsert:active {
+            background-color: red;
+        }
+
+        #fileNameDisplay {
+            width: 47vw;
+            height: 30px;
+            position: fixed;
+            margin-top: 150px;
+            margin-left: 20px;
+            background-color: rgb(0, 0, 0, 0);
+            color: white;
+            font-size: 27px;
+            font-family: arial;
+            border-width: 0px;
+            text-align: left;
+        }
+
+        #fileNameDisplay:focus {
+            outline: none
+        }
+
+        #dropFileArea {
+            position: fixed;
+            left: 700px;
+            top: 20px;
+            background-color: white;
+            width: 350px;
+            height: 160px;
+            border-style: solid;
+            border-width: 3px;
+            border-color: gray;
+            font-family: arial;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .uploadTitle {
+            position: fixed;
+            margin-top: 20px;
+            margin-left: 20px;
+            color: white;
+            width: 500px;
+            height: 60px;
+            font-size: 54px;
+            text-align: center;
+            font-family: arial;
+        }
+
+
+        #contextMenu {
+            display: none;
+            position: fixed;
+            background-color: white;
+            width: 200px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: gray;
+        }
+
+        .contextMenuButton {
+            width: 190px;
+            height: 20px;
+            margin-left: 5px;
+            margin-top: 5px;
+            border-radius: 0px;
+            border-width: 0px;
+            background-color: lightgray
+        }
+
+        .contextMenuButton:active {
+            background-color: rgb(198, 198, 198);
+        }
+
+        #projectNameInput {
+            width: 250px;
+            height: 25px;
+            border-width: 1px;
+            border-color: blue;
+            background-color: blue;
+            color: white;
+            font-size: 23px;
+            font-family: arial;
+        }
+
+        #projectNameInput:focus {
+            outline: none
+        }
+
+        #insertArea {
+            background-color: blue;
+            width: 100vw;
+            height: 200px;
+            position: fixed;
+            top: 0;
+            display: none;
+            gap: 10px;
+        }
+
+        .insertTextButtton {
+            height: 20px;
+            background-color: white;
+            border-radius: 0px;
+            border-width: 1px;
+            border-color: black;
+            margin-top: 5px;
+            margin-left: 5px;
+            text-align: center;
+            width: 80px;
+        }
+
+        .insertTextButtton:active {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea style="display:none"
+        id="aedirogsdfjaksdfmnaljrfjknmaslgjkadfgghjjfdsgdsjjfgsdfgsdfgjjjwrosfgsd">"</textarea>
+    <textarea id="input" placeholder="Type here"></textarea>
+    <iframe id="display"></iframe>
+    <div id="topBar">
+        <input id="projectNameInput" readonly style="margin-left:7px">
+        <button class="topBarButton" id="renameProject">Rename</button>
+        <button class="topBarButton" id="insertFormTopBar">Insert</button>
+        <button class="topBarButton" id="openInNewWindow">Preview in new window</button>
+        <button class="topBarButton" id="openUploadButton">Upload a file</button>
+        <button class="topBarButton" id="exportFile">Export as html</button>
+
+
+    </div>
+    <div id="uploadArea">
+        <div class="uploadTitle">
+            Upload File
+        </div>
+        <input id="fileInput" style="height:20px;" id="name" type="file">
+        <div id="fileInputCover">Select a file</div>
+        <button id="confirmUploadFile">Upload</button>
+        <button id="cancleUpload">×</button>
+        <input readonly id="fileNameDisplay">
+        <div id="dropFileArea">Drop your file here</div>
+    </div>
+    <div id="insertArea" style="display:none">
+
+        <button id="cancleInsert">×</button>
+
+        <div style="width:80px;">
+            <div style="text-align:center;color:white;font-family:arial;">Text</div>
+            <button class="insertTextButtton" onclick="insertText('<h1>heading 1</h1>')">Heading 1</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h2>heading 2</h2>')">Heading 2</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h3>heading 3</h3>')">Heading 3</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h4>heading 4</h4>')">Heading 4</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h5>heading 5</h5>')">Heading 5</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h6>heading 6</h6>')">Heading 6</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<p>paragraph</p>')">Paragraph</button>
+        </div>
+
+        <div style="width:80px;">
+            <div style="text-align:center;color:white;font-family:arial;">Input</div>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'text'+doubleQuotes+'>')">Text input</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'date'+doubleQuotes+'>')">Date input</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'number'+doubleQuotes+'>')">Num
+                input</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input placeholder='+doubleQuotes+'Email'+doubleQuotes+' type='+doubleQuotes+'email'+doubleQuotes+'>')">Email
+                input</button>
+            <br>
+
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'password'+doubleQuotes+' placeholder='+doubleQuotes+'Password'+doubleQuotes+'>')">Pass
+                input</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'file'+doubleQuotes+'>')">File upload</button>
+            <br>
+
+
+
+            <button class="insertTextButtton"
+                onclick="insertText('<form>\n<input>\n<input type='+doubleQuotes+'submit'+doubleQuotes+'>\n</form>')">Form</button>
+        </div>
+
+        <div style="width:80px;">
+            <div style="text-align:center;color:white;font-family:arial;">Select</div>
+            <button class="insertTextButtton"
+                onclick="insertText('<select>\n<option>choice 1</option>\n<option>choice 2</option>\n</select>')">Dropdown</button>
+            <br>
+
+            <button class="insertTextButtton" onclick="insertText('<input type='+doubleQuotes+'color'+doubleQuotes+'>')"
+                style="font-size:12px;">Color select</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'checkbox'+doubleQuotes+'>')">Checkbox</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'radio'+doubleQuotes+'>')">Radio</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<button>Button</button>')">Button</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'range'+doubleQuotes+'>')">Slider</button>
+            <br>
+        </div>
+
+        <div style="width:150px;">
+            <div style="text-align:center;color:white;font-family:arial;">Space</div>
+            <button class="insertTextButtton" onclick="insertText('<br>')" style="width:150px;height:45px">
+                <div style="display:flex;justify-content: center;align-items: center;gap:10px">
+                    <div style="color:gray">
+                        1 st line
+                        <br>
+                        2 nd line
+                    </div>
+                    <p>Line break</p>
+                </div>
+
+
+            </button>
+            <br>
+            <button class="insertTextButtton" style="width:150px;height:45px" onclick="insertText('<hr>')">
+                <div style="display:flex;justify-content: center;align-items: center;gap:10px">
+                    <div style="color:gray">
+                        _______
+                    </div>
+                    <p>Divider line</p>
+                </div>
+            </button>
+            <br>
+            <button style="width:150px;height:45px;" class=" insertTextButtton" onclick="insertText('<div></div>')">Div
+            </button>
+            <br>
+
+        </div>
+        <div style="width:80px">
+            <div style="text-align:center;color:white;font-family:arial;">Web</div>
+            <button onclick="insertText('<iframe src='+doubleQuotes+'{_your_website_URL_}'+doubleQuotes+'></iframe>')"
+                class="insertTextButtton">Iframe</button><br>
+            <button class="insertTextButtton"
+                onclick="insertText('<a href='+doubleQuotes+'{_Your_website_URL_}'+doubleQuotes+'>open</a>')">Hyper
+                link</button>
+
+            <div style="text-align:center;color:white;font-family:arial;">Media</div>
+            <button class="insertTextButtton"
+                onclick="insertText('<img src='+doubleQuotes+'{_Your_image_URL_or_file_}'+doubleQuotes+'>')">Image</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<audio controls>\n  <source src='+doubleQuotes+'{_Your_MP3_file_}'+doubleQuotes+'>\n</audio>')">Audio</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<video controls>\n  <source src='+doubleQuotes+'{_Your_MP4_file_}'+doubleQuotes+'>\n</video>')">Video</button>
+            <br>
+            <button class="insertTextButtton" style="margin-bottom:7px;"
+                onclick="insertText('<iframe \n width='+doubleQuotes+'700'+doubleQuotes+' \n height='+doubleQuotes+'450'+doubleQuotes+' \n src='+doubleQuotes+'https://www.youtube.com/embed/abcd1234?rel=0 {_Replace_to_your_youtube_video_embeded_URL_}'+doubleQuotes+' '+'\n'+' title='+doubleQuotes+'How to upload website from your computer to Github'+doubleQuotes+' \n frameborder='+doubleQuotes+'0'+doubleQuotes+' \n sandbox='+doubleQuotes+'allow-scripts allow-same-origin'+doubleQuotes+' \n allow='+doubleQuotes+'autoplay; \n encrypted-media'+doubleQuotes+' \n allowfullscreen>Youtube video</iframe>')">
+                Youtube</button>
+
+        </div>
+        <div style="width:200px;">
+            <div style="text-align:center;color:white;font-family:arial;">Text display</div>
+            <button class="insertTextButtton" onclick="insertText('<textarea></textarea>')"
+                style="height:45px;">Textarea</button>
+            <button class="insertTextButtton" onclick="insertText('<label>Label</label>')"
+                style="height:45px;">Label</button>
+            <br>
+            <div style="text-align:center;color:white;font-family:arial;">
+                Table
+            </div>
+            <button class="insertTextButtton"
+                onclick="insertText('<table>\n<tr>\n<th>Name</th>\n<th>Age</th>\n<th>hobbies</th>\n</tr>\n<tr>\n<td>Tom</td>\n<td>11</td>\n<td>biking</td>\n</tr>\n</table>')"
+                style="width:169px;height:95px;">
+                Table
+                <br>
+                <hr>
+                | = = | = = | = = | = = | = = |
+                <hr>
+                | = = | = = | = = | = = | = = |
+                </table>
+            </button>
+        </div>
+        <div style="width:80px;">
+            <div style="text-align:center;color:white;font-family:arial;">Javascript</div>
+            <button class="insertTextButtton"
+                onclick="insertText('<script>\n  console.log('+doubleQuotes+'hello!'+doubleQuotes+');\n</script>')"
+                style="height:45px;">Javascript</button>
+            <div style="text-align:center;color:white;font-family:arial;">CSS</div>
+            <button class="insertTextButtton" onclick="insertText('<style></style>')"
+                style="height:45px;">Style</button>
+        </div>
+    </div>
+    <div id="contextMenu">
+        <button onclick="document.getElementById('input').select()" class="contextMenuButton">Select all</button>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('input').value)"
+            class="contextMenuButton">Copy all code</button>
+        <button id="pasteBTNonContexMenu" class="contextMenuButton">Paste</button>
+        <button class="contextMenuButton"
+            onclick="document.getElementById('insertArea').style.display = 'flex';">Insert</button>
+        <button onclick="openInNewWin()" style="margin-bottom: 5px;" class="contextMenuButton">Preview in new
+            window</button>
+    </div>
+
+    <script>
+        document.getElementById("pasteBTNonContexMenu").addEventListener("click", function () {
+            navigator.clipboard.readText()
+                .then(function (text) {
+                    document.getElementById("input").value = document.getElementById("input").value + text;
+                    document.getElementById("display").srcdoc = document.getElementById("input").value;
+                    localStorage.setItem("code", document.getElementById("input").value);
+                })
+                .catch(function (error) {
+                    alert("Paste failed!")
+                });
+        })
+        document.getElementById("insertFormTopBar").addEventListener("click", function () {
+            document.getElementById("insertArea").style.display = "flex";
+            document.getElementById("input").style.height = window.innerHeight - 200 + "px";
+            document.getElementById("display").style.height = window.innerHeight - 200 + "px"
+        });
+        document.getElementById("cancleInsert").addEventListener("click", function () {
+            document.getElementById("insertArea").style.display = "none";
+            document.getElementById("input").style.height = window.innerHeight - 30 + "px";
+            document.getElementById("display").style.height = window.innerHeight - 30 + "px";
+        })
+        document.getElementById("input").addEventListener("input", function () {
+            localStorage.setItem("code", document.getElementById("input").value);
+            document.getElementById("display").srcdoc = document.getElementById("input").value;
+        });
+        document.getElementById("openUploadButton").addEventListener("click", function () {
+            if (document.getElementById("input").value != "") {
+                var ifTheUserSureToUpload = confirm("Upload a file will replace all your work here! Do you want to continue?")
+                if (ifTheUserSureToUpload) {
+                    document.getElementById("uploadArea").style.display = "revert";
+                }
+            } else {
+                document.getElementById("uploadArea").style.display = "revert";
+            }
+        });
+
+        setInterval(function () {
+            document.getElementById("input").style.height = window.innerHeight - 30 + "px";
+            document.getElementById("display").style.height = window.innerHeight - 30 + "px"
+            if (
+                (document.getElementById("uploadArea").style.display == "none") &&
+                (document.getElementById("insertArea").style.display == "none")) {
+                document.getElementById("input").style.height = window.innerHeight - 30 + "px";
+                document.getElementById("display").style.height = window.innerHeight - 30 + "px";
+            } else {
+                document.getElementById("input").style.height = window.innerHeight - 200 + "px";
+                document.getElementById("display").style.height = window.innerHeight - 200 + "px";
+            }
+
+        }, 1000);
+        window.onload = function () {
+            document.getElementById("input").style.height = window.innerHeight - 30 + "px";
+            document.getElementById("display").style.height = window.innerHeight - 30 + "px"
+        }
+        document.getElementById("fileInput").addEventListener("change", function () {
+            document.getElementById("fileNameDisplay").value = (document.getElementById("fileInput").files[0].name)
+        })
+        document.getElementById("confirmUploadFile").addEventListener("click", function () {
+            var file = document.getElementById("fileInput").files[0];
+            if (file) {
+                var reader = new FileReader;
+                reader.onload = function (event) {
+                    document.getElementById("input").value = event.target.result;
+                    document.getElementById("display").srcdoc = event.target.result;
+                    document.getElementById("uploadArea").style.display = "none"
+                    localStorage.setItem("code", document.getElementById("input").value);
+                }
+                reader.readAsText(file);
+            }
+        });
+        document.getElementById("cancleUpload").addEventListener("click", function () {
+            document.getElementById("uploadArea").style.display = "none";
+            document.getElementById("input").style.height = window.innerHeight - 30 + "px";
+            document.getElementById("display").style.height = window.innerHeight - 30 + "px";
+        })
+        document.getElementById("openInNewWindow").addEventListener("click", function () {
+            openInNewWin()
+        });
+        function openInNewWin() {
+            var openNewWindow = window.open("", "_blank")
+            var newWindowContent = document.getElementById("display").srcdoc
+            openNewWindow.document.write(newWindowContent);
+        }
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+            document.getElementById("contextMenu").style.left = e.pageX + "px";
+            document.getElementById("contextMenu").style.top = e.pageY + "px";
+            document.getElementById("contextMenu").style.display = "revert"
+        })
+        document.addEventListener("click", function () {
+            document.getElementById("contextMenu").style.display = "none"
+        })
+        var isSaved = 1
+        document.getElementById("renameProject").addEventListener("click", function () {
+            if (isSaved) {
+                isSaved = 0;
+                document.getElementById("renameProject").innerText = "Save"
+                document.getElementById("projectNameInput").readOnly = false;
+                document.getElementById("projectNameInput").style = "background-color:white;color:black"
+            } else {
+                localStorage.setItem("name", document.getElementById("projectNameInput").value)
+                isSaved = 1;
+                document.getElementById("renameProject").innerText = "Rename"
+                document.getElementById("projectNameInput").style = "background-color:blue;color:white"
+                document.getElementById("projectNameInput").readOnly = true;
+            }
+
+
+        });
+        window.onload = function () {
+            document.getElementById("uploadArea").style.display = "none"
+            document.getElementById("projectNameInput").value = localStorage.getItem("name");
+            document.getElementById("input").value = localStorage.getItem("code");
+            document.getElementById("display").srcdoc = localStorage.getItem("code");
+        }
+        document.getElementById("exportFile").addEventListener("click", function () {
+            var blob = new Blob([document.getElementById("input").value], { type: "text/html" });
+            var a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            var fileName = (document.getElementById("projectNameInput").value || "code") + ".html";
+            a.download = fileName;
+            a.click();
+        });
+        var doubleQuotes = document.getElementById("aedirogsdfjaksdfmnaljrfjknmaslgjkadfgghjjfdsgdsjjfgsdfgsdfgjjjwrosfgsd").value;
+        function insertText(inputElement) {
+            document.getElementById("input").value = document.getElementById("input").value + "\n" + inputElement;
+            document.getElementById("display").srcdoc = document.getElementById("input").value;
+            localStorage.setItem("code", document.getElementById("input").value);
+        }
+        document.getElementById("dropFileArea").addEventListener("dragover", function (e) {
+            e.preventDefault();
+            document.getElementById("dropFileArea").style = "background-color:lightblue";
+        });
+        document.getElementById("dropFileArea").addEventListener("dragleave", function () {
+            document.getElementById("dropFileArea").style = "background-color:white;";
+        });
+        document.getElementById("dropFileArea").addEventListener("drop", function (e) {
+            e.preventDefault();
+            document.getElementById("dropFileArea").style = "background-color:white;";
+            console.log(e);
+            var file = e.dataTransfer.files[0];
+            document.getElementById("fileNameDisplay").value = file.name;
+            var reader2 = new FileReader();
+            reader2.onload = function (event) {
+                document.getElementById("input").value = event.target.result;
+                document.getElementById("display").srcdoc = event.target.result;
+                document.getElementById("uploadArea").style.display = "none"
+                localStorage.setItem("code", event.target.result);
+            }
+            reader2.readAsText(file);
+        });
+    </script>
+</body>
+
+</html>

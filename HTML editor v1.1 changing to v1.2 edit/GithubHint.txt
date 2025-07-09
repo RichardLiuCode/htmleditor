@@ -1,1 +1,0 @@
-You can enter your GitHub link here like https://YourUsername.github.io/project/page.html or https://raw.github.com/xxxxxx/xxxxx/main/page.html, or you can also enter a Static Website URL to import the code. The URL your enter must be directly navigate to a text document or a HTML web page and cannot be blocked by CORS Policy.

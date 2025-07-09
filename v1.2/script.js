@@ -222,7 +222,7 @@ document.getElementById("confirmImportGithubButton").addEventListener("click", f
 
 function displayGitHubHint() {
     fetch("GithubHint.txt").then(function (response) {
-        return response.text
+        return response.text()
     }).then(function (text) {
         document.getElementById("ImportGithubDescriptionDisplay").value = text
     })

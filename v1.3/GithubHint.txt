@@ -1,0 +1,1 @@
+You can enter a URL or your GitHub link here like https://example.com/index.html, https://YourUsername.github.io/project/page.html or https://raw.github.com/xxxxxx/xxxxx/main/page.html.

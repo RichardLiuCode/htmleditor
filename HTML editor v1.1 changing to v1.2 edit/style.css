@@ -1,0 +1,298 @@
+body {
+    margin: 0px;
+}
+
+
+#input {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 50vw;
+    height: 100vh;
+    resize: none;
+    border-radius: 0px;
+    border: none;
+    background-color: lightgray;
+}
+
+#input:focus {
+    outline: none
+}
+
+#display {
+    position: fixed;
+    width: 50vw;
+    height: 100vh;
+    right: 0;
+    bottom: 0;
+    border: none;
+}
+
+#topBar {
+    display: flex;
+    gap: 7px;
+    width: 100vw;
+    height: 30px;
+    background-color: blue;
+    position: fixed;
+    top: 0;
+}
+
+#uploadArea,
+#importFromGitHubArea {
+    background-color: blue;
+    width: 100vw;
+    height: 200px;
+    position: fixed;
+    top: 0;
+    display: none;
+}
+
+.topBarButton {
+    height: 20px;
+    margin-top: 5px;
+    background-color: white;
+    border-radius: 0px;
+    border-width: 0px;
+}
+
+.topBarButton:active {
+    background-color: rgb(234, 232, 232);
+}
+
+#fileInput {
+    position: fixed;
+    margin-top: 100px;
+    margin-left: 20px;
+    height: 30px;
+    width: 350px;
+    background-color: white;
+    border-radius: 0px;
+    border-width: 0px;
+}
+
+#fileInputCover {
+    position: fixed;
+    margin-top: 100px;
+    margin-left: 20px;
+    height: 30px;
+    width: 350px;
+    background-color: white;
+    border-radius: 0px;
+    border-width: 0px;
+    pointer-events: none;
+    font-family: arial;
+    font-size: 23px;
+    text-align: center;
+}
+
+#confirmUploadFile {
+    position: fixed;
+    margin-top: 100px;
+    margin-left: 380px;
+    height: 30px;
+    width: 130px;
+    font-size: 23px;
+    background-color: white;
+    border-radius: 0px;
+    border-width: 0px;
+}
+
+#confirmUploadFile:active {
+    background-color: rgb(234, 232, 232);
+}
+
+#cancleUpload,
+#cancleInsert,
+#cancleImportFromGitHub {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    border-width: 0px;
+    border-radius: 0px;
+    background-color: blue;
+    color: white;
+}
+
+#cancleUpload:active,
+#cancleInsert:active,
+#cancleImportFromGitHub:active {
+    background-color: red;
+}
+
+#fileNameDisplay {
+    width: 47vw;
+    height: 30px;
+    position: fixed;
+    margin-top: 150px;
+    margin-left: 20px;
+    background-color: rgb(0, 0, 0, 0);
+    color: white;
+    font-size: 27px;
+    font-family: arial;
+    border-width: 0px;
+    text-align: left;
+}
+
+#fileNameDisplay:focus {
+    outline: none
+}
+
+#dropFileArea {
+    position: fixed;
+    left: 700px;
+    top: 20px;
+    background-color: white;
+    width: 350px;
+    height: 160px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: gray;
+    font-family: arial;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.uploadTitle {
+    position: fixed;
+    margin-top: 20px;
+    margin-left: 20px;
+    color: white;
+    width: 500px;
+    height: 60px;
+    font-size: 54px;
+    text-align: center;
+    font-family: arial;
+}
+
+
+#contextMenu {
+    display: none;
+    position: fixed;
+    background-color: white;
+    width: 200px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: gray;
+}
+
+.contextMenuButton {
+    width: 190px;
+    height: 20px;
+    margin-left: 5px;
+    margin-top: 5px;
+    border-radius: 0px;
+    border-width: 0px;
+    background-color: lightgray
+}
+
+.contextMenuButton:active {
+    background-color: rgb(198, 198, 198);
+}
+
+#projectNameInput {
+    width: 250px;
+    height: 25px;
+    border-width: 1px;
+    border-color: blue;
+    background-color: blue;
+    color: white;
+    font-size: 23px;
+    font-family: arial;
+}
+
+#projectNameInput:focus {
+    outline: none
+}
+
+#insertArea {
+    background-color: blue;
+    width: 100vw;
+    height: 200px;
+    position: fixed;
+    top: 0;
+    display: none;
+    gap: 10px;
+}
+
+.insertTextButtton {
+    height: 20px;
+    background-color: white;
+    border-radius: 0px;
+    border-width: 1px;
+    border-color: black;
+    margin-top: 5px;
+    margin-left: 5px;
+    text-align: center;
+    width: 80px;
+}
+
+.insertTextButtton:active {
+    background-color: lightgray;
+}
+
+select:focus {
+    outline: none
+}
+
+#importGithubURLInput {
+    width: 500px;
+    height: 20px;
+    background-color: white;
+    border-width: 0px;
+    border-radius: 0px;
+    position: fixed;
+    left: 40px;
+    top: 120px;
+}
+
+#importGithubURLInput:focus {
+    outline: none;
+}
+
+#confirmImportGithubButton {
+    width: 70px;
+    height: 21px;
+    position: fixed;
+    left: 550px;
+    top: 120px;
+    background-color: white;
+    border-radius: 0px;
+    border-width: 0px;
+}
+
+#confirmImportGithubButton:active {
+    background-color: lightgray
+}
+
+
+
+.ImportGithubTitle {
+    font-family: arial;
+    position: fixed;
+    top: 30px;
+    left: 40px;
+}
+
+.ImportGithubDescription {
+    background-color: white;
+    font-family: arial;
+    width: 46vw;
+    height: 150px;
+    position: fixed;
+    left: 650px;
+    top: 30px;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 0px;
+    resize: vertical;
+}
+
+.ImportGithubDescription:focus {
+    outline: none;
+}

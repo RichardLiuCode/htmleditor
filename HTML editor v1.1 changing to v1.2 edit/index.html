@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description"
+        content="This is a website that you can type html code and edit them, you can also upload or export html file">
+    <meta name="author" content="richard">
+    <link rel="icon" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
+    <title>HTML editor v1.3</title>
+</head>
+
+<body>
+    <textarea style="display:none"
+        id="aedirogsdfjaksdfmnaljrfjknmaslgjkadfgghjjfdsgdsjjfgsdfgsdfgjjjwrosfgsd">"</textarea>
+    <textarea id="input" placeholder="Type here"></textarea>
+    <iframe id="display"></iframe>
+    <div id="topBar">
+        <input id="projectNameInput" readonly style="margin-left:7px">
+        <button class="topBarButton" id="renameProject">Rename</button>
+        <button class="topBarButton" id="insertFormTopBar">Insert</button>
+        <button class="topBarButton" onclick="formatCode()">Format</button>
+        <select class="topBarButton" id="previewOptionDropdown" style="width:80px">
+            <option disabled selected>Preview</option>
+            <option value="previewinnewtab">- Preview in new window</option>
+            <option disabled selected>Editor preview options</option>
+            <option value="default_showBothCodeAndPreview_03457">- Default</option>
+            <option value="showCodeOnly" id="codeAndPreivewOption">- Show code only, close preivew window</option>
+            <option value="showPreviewOnly" id="FullPreivew">- Preview in full screen</option>
+
+        </select>
+        <select class="topBarButton" style="width:80px" id="importOptionsDropdown">
+            <option disabled selected>Import</option>
+            <option value="upload">Upload a file </option>
+            <option value="fromGitHub">Import from URL </option>
+        </select>
+        <button class="topBarButton" id="exportFile">Export as html</button>
+
+
+    </div>
+    <div id="uploadArea">
+        <div class="uploadTitle">
+            Upload File
+        </div>
+        <input id="fileInput" style="height:20px;" id="name" type="file">
+        <div id="fileInputCover">Select a file</div>
+        <button id="confirmUploadFile">Upload</button>
+        <button id="cancleUpload">×</button>
+        <input readonly id="fileNameDisplay">
+        <div id="dropFileArea">Drop your file here</div>
+    </div>
+    <div id="importFromGitHubArea">
+        <button id="cancleImportFromGitHub">×</button>
+        <div class="ImportGithubTitle" style="color:white">
+            <h1>Import from a URL</h1>
+        </div>
+        <textarea readonly class="ImportGithubDescription" id="ImportGithubDescriptionDisplay"></textarea>
+        <input type="url" id="importGithubURLInput" placeholder="Enter URL">
+        <button id="confirmImportGithubButton">Enter</button>
+    </div>
+    <div id="insertArea" style="display:none">
+
+        <button id="cancleInsert">×</button>
+
+        <div style="width:80px;">
+            <div style="text-align:center;color:white;font-family:arial;">Text</div>
+            <button class="insertTextButtton" onclick="insertText('<h1>heading 1</h1>')">Heading 1</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h2>heading 2</h2>')">Heading 2</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h3>heading 3</h3>')">Heading 3</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h4>heading 4</h4>')">Heading 4</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h5>heading 5</h5>')">Heading 5</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<h6>heading 6</h6>')">Heading 6</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<p>paragraph</p>')">Paragraph</button>
+        </div>
+
+        <div style="width:80px;">
+            <div style="text-align:center;color:white;font-family:arial;">Input</div>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'text'+doubleQuotes+'>')">Text input</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'date'+doubleQuotes+'>')">Date input</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'number'+doubleQuotes+'>')">Num
+                input</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input placeholder='+doubleQuotes+'Email'+doubleQuotes+' type='+doubleQuotes+'email'+doubleQuotes+'>')">Email
+                input</button>
+            <br>
+
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'password'+doubleQuotes+' placeholder='+doubleQuotes+'Password'+doubleQuotes+'>')">Pass
+                input</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'file'+doubleQuotes+'>')">File upload</button>
+            <br>
+
+
+
+            <button class="insertTextButtton"
+                onclick="insertText('<form>\n<input>\n<input type='+doubleQuotes+'submit'+doubleQuotes+'>\n</form>')">Form</button>
+        </div>
+
+        <div style="width:80px;">
+            <div style="text-align:center;color:white;font-family:arial;">Select</div>
+            <button class="insertTextButtton"
+                onclick="insertText('<select>\n<option>choice 1</option>\n<option>choice 2</option>\n</select>')">Dropdown</button>
+            <br>
+
+            <button class="insertTextButtton" onclick="insertText('<input type='+doubleQuotes+'color'+doubleQuotes+'>')"
+                style="font-size:12px;">Color select</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'checkbox'+doubleQuotes+'>')">Checkbox</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'radio'+doubleQuotes+'>')">Radio</button>
+            <br>
+            <button class="insertTextButtton" onclick="insertText('<button>Button</button>')">Button</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<input type='+doubleQuotes+'range'+doubleQuotes+'>')">Slider</button>
+            <br>
+        </div>
+
+        <div style="width:150px;">
+            <div style="text-align:center;color:white;font-family:arial;">Space</div>
+            <button class="insertTextButtton" onclick="insertText('<br>')" style="width:150px;height:45px">
+                <div style="display:flex;justify-content: center;align-items: center;gap:10px">
+                    <div style="color:gray">
+                        1 st line
+                        <br>
+                        2 nd line
+                    </div>
+                    <p>Line break</p>
+                </div>
+
+
+            </button>
+            <br>
+            <button class="insertTextButtton" style="width:150px;height:45px" onclick="insertText('<hr>')">
+                <div style="display:flex;justify-content: center;align-items: center;gap:10px">
+                    <div style="color:gray">
+                        _______
+                    </div>
+                    <p>Divider line</p>
+                </div>
+            </button>
+            <br>
+            <button style="width:150px;height:45px;" class=" insertTextButtton" onclick="insertText('<div></div>')">Div
+            </button>
+            <br>
+
+        </div>
+        <div style="width:80px">
+            <div style="text-align:center;color:white;font-family:arial;">Web</div>
+            <button onclick="insertText('<iframe src='+doubleQuotes+'{_your_website_URL_}'+doubleQuotes+'></iframe>')"
+                class="insertTextButtton">Iframe</button><br>
+            <button class="insertTextButtton"
+                onclick="insertText('<a href='+doubleQuotes+'{_Your_website_URL_}'+doubleQuotes+'>open</a>')">Hyper
+                link</button>
+
+            <div style="text-align:center;color:white;font-family:arial;">Media</div>
+            <button class="insertTextButtton"
+                onclick="insertText('<img src='+doubleQuotes+'{_Your_image_URL_or_file_}'+doubleQuotes+'>')">Image</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<audio controls>\n  <source src='+doubleQuotes+'{_Your_MP3_file_}'+doubleQuotes+'>\n</audio>')">Audio</button>
+            <br>
+            <button class="insertTextButtton"
+                onclick="insertText('<video controls>\n  <source src='+doubleQuotes+'{_Your_MP4_file_}'+doubleQuotes+'>\n</video>')">Video</button>
+            <br>
+            <button class="insertTextButtton" style="margin-bottom:7px;"
+                onclick="insertText('<iframe \n width='+doubleQuotes+'700'+doubleQuotes+' \n height='+doubleQuotes+'450'+doubleQuotes+' \n src='+doubleQuotes+'https://www.youtube.com/embed/abcd1234?rel=0 {_Replace_to_your_youtube_video_embeded_URL_}'+doubleQuotes+' '+'\n'+' title='+doubleQuotes+'How to upload website from your computer to Github'+doubleQuotes+' \n frameborder='+doubleQuotes+'0'+doubleQuotes+' \n sandbox='+doubleQuotes+'allow-scripts allow-same-origin'+doubleQuotes+' \n allow='+doubleQuotes+'autoplay; \n encrypted-media'+doubleQuotes+' \n allowfullscreen>Youtube video</iframe>')">
+                Youtube</button>
+
+        </div>
+        <div style="width:200px;">
+            <div style="text-align:center;color:white;font-family:arial;">Text display</div>
+            <button class="insertTextButtton" onclick="insertText('<textarea></textarea>')"
+                style="height:45px;">Textarea</button>
+            <button class="insertTextButtton" onclick="insertText('<label>Label</label>')"
+                style="height:45px;">Label</button>
+            <br>
+            <div style="text-align:center;color:white;font-family:arial;">
+                Table
+            </div>
+            <button class="insertTextButtton"
+                onclick="insertText('<table>\n<tr>\n<th>Name</th>\n<th>Age</th>\n<th>hobbies</th>\n</tr>\n<tr>\n<td>Tom</td>\n<td>11</td>\n<td>biking</td>\n</tr>\n</table>')"
+                style="width:169px;height:95px;">
+                Table
+                <br>
+                <hr>
+                | = = | = = | = = | = = | = = |
+                <hr>
+                | = = | = = | = = | = = | = = |
+                </table>
+            </button>
+        </div>
+        <div style="width:80px;">
+            <div style="text-align:center;color:white;font-family:arial;">Javascript</div>
+            <button class="insertTextButtton"
+                onclick="insertText('<script>\n  console.log('+doubleQuotes+'hello!'+doubleQuotes+');\n</script>')"
+                style="height:45px;">Javascript</button>
+            <div style="text-align:center;color:white;font-family:arial;">CSS</div>
+            <button class="insertTextButtton" onclick="insertText('<style></style>')"
+                style="height:45px;">Style</button>
+        </div>
+    </div>
+    <div id="contextMenu">
+        <button onclick="document.getElementById('input').select()" class="contextMenuButton">Select all</button>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('input').value)"
+            class="contextMenuButton">Copy all code</button>
+        <button id="pasteBTNonContexMenu" class="contextMenuButton">Paste</button>
+        <button class="contextMenuButton"
+            onclick="document.getElementById('insertArea').style.display = 'flex';">Insert</button>
+        <button class="contextMenuButton" onclick="formatCode()">Format code</button>
+        <button onclick="openInNewWin()" class="contextMenuButton">Preview in new
+            window</button>
+        <button onclick="window.location.reload()" style="margin-bottom: 5px;" class="contextMenuButton">Reload</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.4/beautify-html.min.js"
+        integrity="sha512-ZIu+FgQxrG6A7u+BQMNz0g+pTJGAqB+oumn2rZegvyPYJG4aegC6srYdRvksOaDfqOMM1/vuUJZWMIiMNJw2mw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

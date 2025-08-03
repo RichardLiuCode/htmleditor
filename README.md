@@ -7,7 +7,7 @@ This is a website that you edit html code
 - Insert some html elements
 - custom context menu
 ## Visit site
-| [↗️ Visit site](https://RichardLiuCode.github.io/htmleditor) | [https://RichardLiuCode.github.io/HTMLeditor](https://RichardLiuCode.github.io/HTMLeditor) |
+| [↗️ Visit site](https://RichardLiuCode.github.io/htmleditor) | [https://RichardLiuCode.github.io/htmleditor](https://RichardLiuCode.github.io/htmleditor) |
 |-|-|
 
 ## Language

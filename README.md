@@ -16,4 +16,7 @@ This is a website that you edit html code
 - JS
 
 ### By Richard
-![image](preview.png)
+|Sample|
+|-|
+|![image](preview.png)|
+

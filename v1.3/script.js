@@ -288,4 +288,5 @@ function showFullScreenPreview() {
     document.getElementById("display").style = "width:100vw"
     document.getElementById("input").style.display = "none"
 }
+
 /* ---------------------------------- */
